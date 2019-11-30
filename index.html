@@ -1,2 +1,114 @@
-Hola mundo
-Hello world
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Merriweather|Open+Sans&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <title>Dr Sa&uacute;l Vargas</title>
+
+    <style>
+    h4, h5, h6,
+    h1, h2, h3 {
+        font-family: 'Merriweather', sans-serif;
+    }
+
+    p {
+        font-weight: bold;
+        text-align: justify;
+    }
+    
+    html,body{
+        font-family: 'Open Sans', sans-serif;
+        background:#1ed760;
+    }
+    
+    .header{
+        background:url(images/banner.jpg)no-repeat;
+        background-size:cover;
+        -webkit-background-size:cover;
+        -moz-background-size:cover;
+        -ms-background-size:cover;
+        min-height:800px;
+        -o-background-size:cover;
+        position: relative;
+    }
+
+    .header-greetings {
+        background: rgba(0, 0, 0, 0.90);
+        text-align: center;
+        color: white;
+        padding-top: 100px;
+        padding-bottom: 100px;
+        border-radius: 1em;
+    }
+
+    .social-media{
+        padding:2em 0;
+    }
+    .social-media-top{
+        text-align:center;
+    }
+    ul.social{
+        padding:0;
+        margin:2em 0 0;
+    }
+    ul.social li{
+        display: inline-block;
+    }
+
+    .img-circle {
+        margin: 0 5px 0 0;
+        height: 60px;
+    }
+
+
+    </style>
+  </head>
+  <body>
+
+    <div class="container-fluid">
+        <div class="row header">
+            <div class="col-sm my-auto header-greetings mx-4">
+                <h1 class="display-3" style="color: #1ed760;">Dr Sa&uacute;l Vargas</h1>
+                <h2 class>Machine Learning Engineer at Spotify</h2>
+                <div class="social-media-top">
+                    <ul class="social">
+                        <li><a href="mailto:hello@saulvargas.es"><img src="images/mail.png" alt="E-mail" class="img-circle icon"></a></li>
+                        <li><a href="http://www.twitter.com/saulvargas"><img src="images/twitter.png" alt="Twitter" class="img-circle icon"></a></li>
+                        <li><a href="http://es.linkedin.com/in/saulvargas"><img src="images/linkedin.png" alt="LinkedIn" class="img-circle icon"></a></li>
+                        <li><a href="http://scholar.google.es/citations?user=tCqjVGgAAAAJ"><img src="images/google-scholar.png" alt="Mendeley" class="img-circle icon"></a></li>
+                        <li><a href="https://github.com/saulvargas"><img src="images/github.png" alt="GitHub" class="img-circle icon"></a></li>
+                    </ul>
+                </div>              
+            </div>
+            <div class="col-sm"></div>
+        </div>
+
+        <div class="row py-5">
+            <div class="col-sm-3 offset-sm-1 mt-5 mb-3">
+                <img class="img-fluid" style="border-radius: 1em;" src="images/profile.jpg" alt="A picture of me">
+            </div>
+            <div class="col-sm-6">
+                <h2 class="text-center" style="color: white;">¡Hola, Hi, Привет!</h2>
+                <p>Welcome to my personal website. Let me introduce myself.</p>
+                <p>I am an applied Machine Learning practitioner that enjoys building products and services that millions can use. With the content explosion brought by the World Wide Web, a common challenge across different domains is assisting users finding the content they are interested in. There is where my work comes in. I have developed recommender systems for varied domains such as academic literature in <a href="https://www.mendeley.com/">Mendeley</a> and fashion in <a href="https://www.asos.com/">ASOS</a>. I now work on <a href="https://www.spotify.com/uk/">Spotify</a>'s music and podcast search functionality.</p>
+                <p>I received a PhD from the <a href="http://uam.es/">Autonomous University of Madrid (UAM)</a> in Spain under the supervision of <a href="http://ir.ii.uam.es/castells/">Prof Pablo Castells</a>. The research topic was the evaluation and enhancement of novelty and diversity in recommender systems. As a result of it, I wrote several <a href="http://ir.ii.uam.es/publications/?autor=saul.vargas@uam.es">research papers</a>, a Java framework called <a href="http://ranksys.org">RankSys</a> and a <a href="phd-thesis.pdf">dissertation</a>.</p>
+                <p>I am happy to share my experiences in conferences, events and meetups when time allows it. In the last couple of years, I have participated in different events such as <a href="https://www.youtube.com/watch?v=F-Pfl_RE528">EGG London</a>, <a href="https://www.youtube.com/watch?v=5hJfLr5hvOI&t=12m12s">Microsoft Build</a> and <a href="https://irsg.bcs.org/SearchSolutions/2018/sse2018.php">Search Solutions</a>.</p>
+            </div>
+        </div>
+    </div>
+  
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </body>
+</html>
