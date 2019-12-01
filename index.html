@@ -44,6 +44,8 @@
             -ms-background-size: cover;
             -o-background-size: cover;
             position: relative;
+            height: 100vh;
+            height: calc(var(--vh, 1vh) * 100);
         }
 
         .header-greetings {
@@ -84,7 +86,7 @@
 <body>
 
     <div class="container-fluid">
-        <div class="row header vh-100">
+        <div class="row header">
             <div class="col">
                 <div class="row" style="height: 90%;">
                     <div class="col-md-6 py-5 my-auto header-greetings mx-4">
@@ -158,6 +160,18 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        // https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
+        let vh = window.innerHeight * 0.01;
+        // Then we set the value in the --vh custom property to the root of the document
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+
+        window.addEventListener('resize', () => {
+            // We execute the same script as before
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        });
+    </script>
 </body>
 
 </html>
