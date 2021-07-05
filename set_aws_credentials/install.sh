@@ -2,11 +2,28 @@
 
 INSTALL_DIR="$HOME/.set_aws_credentials"
 SCRIPT_PATH="$INSTALL_DIR/set_aws_credentials.py"
-COMMAND_PATH="$HOME/.local/bin/set_aws_credentials"
+BIN_PATH="$HOME/.local/bin"
+COMMAND_PATH="$BIN_PATH/set_aws_credentials"
+
+# check that python3, pip3 and virtualenvs are available
+if ! command -v python3 &>/dev/null; then
+  echo "ERROR: python3 could not be found"
+  echo "       you need to install python!"
+  exit 1
+fi
+if ! command -v pip3 &>/dev/null; then
+  echo "ERROR: pip3 could not be found"
+  exit 1
+fi
+if ! pip3 freeze | grep -q virtualenv; then
+  echo "ERROR: virtualenv is not installed"
+  echo "       run \"pip3 install virtualenv\" first and try again"
+  exit 1
+fi
 
 mkdir -p "$INSTALL_DIR"
 
-cat > "$SCRIPT_PATH" << EOF
+cat >"$SCRIPT_PATH" <<EOF
 import argparse
 import functools
 import os
@@ -58,24 +75,29 @@ if __name__ == "__main__":
 
 EOF
 
-virtualenv -q "$INSTALL_DIR/venv"
+python3 -m virtualenv -q "$INSTALL_DIR/venv"
 . "$INSTALL_DIR/venv/bin/activate"
-pip -q install --upgrade pip
-pip -q install boto3
+python3 -m pip -q install --upgrade pip
+python3 -m pip -q install boto3
 deactivate
 
-cat > "$COMMAND_PATH" << EOF
+cat >"$COMMAND_PATH" <<EOF
 #!/usr/bin/env bash
 
 . "$INSTALL_DIR/venv/bin/activate"
-python $SCRIPT_PATH "\$@"
+python3 $SCRIPT_PATH "\$@"
 deactivate
 
 EOF
 
 chmod +x "$COMMAND_PATH"
 
-echo "set_aws_credentials has been installed, try running"
+if ! command -v "$COMMAND_PATH"; then
+  echo "WARNING: set_aws_credentials has been installed in $BIN_PATH, but $BIN_PATH is not part of your \$PATH. Fix this, and then try running:"
+else
+  echo "SUCCESS: set_aws_credentials has been installed, try running"
+fi
+
 echo "$ set_aws_credentials <profile_name>"
 echo "and check that the AWS environment variables are set up with"
 echo "$ env | grep AWS_"
