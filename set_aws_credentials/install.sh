@@ -77,8 +77,8 @@ EOF
 
 python3 -m virtualenv -q "$INSTALL_DIR/venv"
 . "$INSTALL_DIR/venv/bin/activate"
-python3 -m pip -q install --upgrade pip
-python3 -m pip -q install boto3
+pip3 -q install --upgrade pip
+pip3 -q install boto3
 deactivate
 
 cat >"$COMMAND_PATH" <<EOF
