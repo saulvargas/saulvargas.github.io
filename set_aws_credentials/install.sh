@@ -7,8 +7,7 @@ COMMAND_PATH="$BIN_PATH/set_aws_credentials"
 
 # check that python3, pip3 and virtualenvs are available
 if ! command -v python3 &>/dev/null; then
-  echo "ERROR: python3 could not be found"
-  echo "       you need to install python!"
+  echo "ERROR: python3 could not be found, please install python."
   exit 1
 fi
 if ! command -v pip3 &>/dev/null; then
@@ -16,10 +15,18 @@ if ! command -v pip3 &>/dev/null; then
   exit 1
 fi
 if ! pip3 freeze | grep -q virtualenv; then
-  echo "ERROR: virtualenv is not installed"
-  echo "       run \"pip3 install virtualenv\" first and try again"
+  echo "ERROR: virtualenv is not installed, please run \"pip3 install virtualenv\""
   exit 1
 fi
+if ! command -v aws &>/dev/null; then
+  echo "ERROR: aws cli is not installed, install: https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html"
+  exit 1
+fi
+if ! [[ $(aws --version) =~ ^aws-cli/2\. ]]; then
+  echo "ERROR: aws cli is probably outdated, update: https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html"
+  exit 1
+fi
+
 
 mkdir -p "$INSTALL_DIR"
 
@@ -77,8 +84,8 @@ EOF
 
 python3 -m virtualenv -q "$INSTALL_DIR/venv"
 . "$INSTALL_DIR/venv/bin/activate"
-pip3 -q install --upgrade pip
-pip3 -q install boto3
+python3 -m pip -q install --upgrade pip
+python3 -m pip -q install boto3
 deactivate
 
 cat >"$COMMAND_PATH" <<EOF
