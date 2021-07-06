@@ -5,7 +5,7 @@ SCRIPT_PATH="$INSTALL_DIR/set_aws_credentials.py"
 BIN_PATH="$HOME/.local/bin"
 COMMAND_PATH="$BIN_PATH/set_aws_credentials"
 
-# check that python3, pip3 and virtualenvs are available
+# check that python3, pip3 and virtualenv are available
 if ! command -v python3 &>/dev/null; then
   echo "ERROR: python3 could not be found, please install python."
   exit 1
