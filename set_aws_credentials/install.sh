@@ -32,9 +32,11 @@ mkdir -p "$INSTALL_DIR"
 
 cat >"$SCRIPT_PATH" <<EOF
 import argparse
+import configparser
 import functools
 import os
 import subprocess
+from pathlib import Path
 
 import boto3
 import botocore.exceptions
@@ -55,7 +57,7 @@ def retry_with_sso_login(f):
 
 
 @retry_with_sso_login
-def main(*, profile: str) -> None:
+def set_env(*, profile: str) -> None:
     session = boto3.Session(profile_name=profile)
     credentials = session.get_credentials().get_frozen_credentials()
 
@@ -73,19 +75,52 @@ def main(*, profile: str) -> None:
     subprocess.run(shell)
 
 
+def set_file(profiles: list[str]) -> None:
+    credentials_path = (Path.home() / ".aws/credentials")
+    credentials_path.touch(exist_ok=True)
+
+    credentials = configparser.ConfigParser()
+    credentials.read(credentials_path)
+
+    for profile in profiles:
+        set_file_profile(credentials=credentials, profile=profile)
+
+    with credentials_path.open("w") as f:
+        credentials.write(f)
+
+
+@retry_with_sso_login
+def set_file_profile(*, credentials: configparser.ConfigParser, profile: str) -> None:
+    session = boto3.Session(profile_name=profile)
+    new_credentials = session.get_credentials().get_frozen_credentials()
+
+    credentials[profile] = {
+        "aws_access_key_id": new_credentials.access_key,
+        "aws_secret_access_key": new_credentials.secret_key,
+        "aws_session_token": new_credentials.token,
+    }
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("profile")
+    parser.add_argument("-f", "--file", action="store_true")
+    parser.add_argument("profiles", nargs="+")
     args = parser.parse_args()
 
-    main(profile=args.profile)
+    if args.file:
+        set_file(args.profiles)
+    else:
+        if len(args.profiles) == 1:
+            set_env(profile=args.profiles[0])
+        else:
+            raise ValueError("cannot setup environment for more than one account")
 
 EOF
 
 python3 -m virtualenv -q "$INSTALL_DIR/venv"
 . "$INSTALL_DIR/venv/bin/activate"
 python3 -m pip -q install --upgrade pip
-python3 -m pip -q install boto3
+python3 -m pip -q install boto3 toml
 deactivate
 
 cat >"$COMMAND_PATH" <<EOF
@@ -105,7 +140,12 @@ else
   echo "SUCCESS: set_aws_credentials has been installed, try running"
 fi
 
-echo "$ set_aws_credentials <profile_name>"
-echo "and check that the AWS environment variables are set up with"
-echo "$ env | grep AWS_"
-echo "enjoy!"
+echo "     $ set_aws_credentials <profile_name>"
+echo " and check that the AWS environment variables are set up with"
+echo "     $ env | grep AWS_"
+echo " or"
+echo "     $ set_aws_credentials -f <profile_name>"
+echo " and then"
+echo "     $ cat ~/.aws/credentials"
+echo ""
+echo "Enjoy!"
